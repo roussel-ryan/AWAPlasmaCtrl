@@ -32,11 +32,10 @@ class Logic(baseUIWidget,baseUIClass):
         
         self.setupUi(self)
 
-    @_SetStatus('Initilization')
     def OnInitializeClicked(self):
         #open config file and initialize connections
         logging.debug("Initialize button clicked")
-        self.timer.start(2000)
+        #self.timer.start(2000)
         
         #connections to the TDK power supplies
         #power supplies are connected via Ethernet in a chain with the heater one
@@ -57,7 +56,7 @@ class Logic(baseUIWidget,baseUIClass):
         self.TDK_PS.write('OUTP:STAT 1')
         
         solenoid_address = 'TCPIP0::192.168.0.8::gpib0,25::INSTR'
-        self.SOLENOID_PS = VisaHandler.VisaHandler(solenoid_address,RS485_enabled=False)
+        self.SOLENOID_PS = VisaHandler.VisaHandler(solenoid_address,RS485_enabled=False,error_query='ERR?')
         self.SOLENOID_PS.write('OUT 1')
 
         #self.PlasmaStatus.setText('Ready')
@@ -93,14 +92,15 @@ class Logic(baseUIWidget,baseUIClass):
         logging.debug("enter pressed on TDK#2VSet")
         self.TDK_PS.select_RS485_device(self.discharge_RS485)
         self.TDK_PS.write(':VOLT {:3.2f}'.format(float(self.DISCHARGEVSet.text())))
-        
+        logging.debug('done setting voltage')
         
     def OnDISCHARGEISetChanged(self):
         #Send cmmands to TDK#2 over ethernet to change current setting
         logging.debug("enter pressed on TDK#2ISet")
         self.TDK_PS.select_RS485_device(self.discharge_RS485)
-        self.TDK_PS.write(':CURR {:3.2f}'.format(float(self.HEATERISet.text())))
-
+        self.TDK_PS.write(':CURR {:3.2f}'.format(float(self.DISCHARGEISet.text())))
+        #self.TDK_PS.unlock()
+        
     def OnHeatCathodeClicked(self):
         pass
 
@@ -113,24 +113,26 @@ class Logic(baseUIWidget,baseUIClass):
         logging.debug("enter pressed on Close button")
         self.timer.stop()
         
-    def Update(self):
-        logging.debug("updating timer")
-
-        #self.PlasmaStatus.setText('Updating')
-        #update the values of TDIK power supplies
-        #self.TDK_PS.select_RS485_device(self.discharge_RS485)
-        #self.DISCHARGEVRead.setText(self.TDK_PS.query('MEAS:VOLT?'))
-        #self.DISCHARGEIRead.setText(self.TDK_PS.query('MEAS:CURR?'))
-
-        #self.TDK_PS.select_RS485_device(self.heater_RS485)
-        #self.HEATERVRead.setText(self.TDK_PS.query('MEAS:VOLT?'))
-        #self.HEATERIRead.setText(self.TDK_PS.query('MEAS:CURR?'))
-
-        #self.SOLENOIDIRead.setText(self.SOLENOID_PS.query('IOUT?').split('   ')[1])
-        #self.SOLENOIDVRead.setText(self.SOLENOID_PS.query('VOUT?').split('   ')[1])
+    def OnUpdateClicked(self):
+        self.Update()
         
-    
+    def Update(self):
+        self.PlasmaStatus.setText('Updating')
+        #update the values of TDIK power supplies
+        self.TDK_PS.select_RS485_device(self.discharge_RS485)
+        self.DISCHARGEVRead.setText(self.TDK_PS.query('MEAS:VOLT?'))
+        self.DISCHARGEIRead.setText(self.TDK_PS.query('MEAS:CURR?'))
 
+        self.TDK_PS.select_RS485_device(self.heater_RS485)
+        self.HEATERVRead.setText(self.TDK_PS.query('MEAS:VOLT?'))
+        self.HEATERIRead.setText(self.TDK_PS.query('MEAS:CURR?'))
+        #self.TDK_PS.unlock()
+        
+        self.SOLENOIDIRead.setText(self.SOLENOID_PS.query('IOUT?').split(' ')[-1])
+        self.SOLENOIDVRead.setText(self.SOLENOID_PS.query('VOUT?').split(' ')[-1])
+    
+    
+        
 
 def main():
     logging.basicConfig(level=logging.DEBUG)

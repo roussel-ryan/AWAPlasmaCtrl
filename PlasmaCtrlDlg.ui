@@ -19,7 +19,7 @@
   <widget class="QPushButton" name="InitalizeButton">
    <property name="geometry">
     <rect>
-     <x>480</x>
+     <x>400</x>
      <y>400</y>
      <width>94</width>
      <height>27</height>
@@ -27,6 +27,9 @@
    </property>
    <property name="text">
     <string>Initialize</string>
+   </property>
+   <property name="autoDefault">
+    <bool>false</bool>
    </property>
   </widget>
   <widget class="QGroupBox" name="IonGaugeCtrl">
@@ -432,7 +435,7 @@
   <widget class="QPushButton" name="CloseButton">
    <property name="geometry">
     <rect>
-     <x>370</x>
+     <x>290</x>
      <y>400</y>
      <width>94</width>
      <height>27</height>
@@ -441,12 +444,15 @@
    <property name="text">
     <string>Close</string>
    </property>
+   <property name="autoDefault">
+    <bool>false</bool>
+   </property>
   </widget>
   <widget class="QPushButton" name="HeatCathodeButton">
    <property name="geometry">
     <rect>
-     <x>250</x>
-     <y>340</y>
+     <x>280</x>
+     <y>330</y>
      <width>94</width>
      <height>27</height>
     </rect>
@@ -458,8 +464,8 @@
   <widget class="QPushButton" name="CoolCathodeButton">
    <property name="geometry">
     <rect>
-     <x>250</x>
-     <y>370</y>
+     <x>280</x>
+     <y>360</y>
      <width>94</width>
      <height>27</height>
     </rect>
@@ -491,6 +497,22 @@
     </rect>
    </property>
   </widget>
+  <widget class="QPushButton" name="UpdateButton">
+   <property name="geometry">
+    <rect>
+     <x>510</x>
+     <y>400</y>
+     <width>94</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Update</string>
+   </property>
+   <property name="autoDefault">
+    <bool>false</bool>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections>
@@ -501,12 +523,12 @@
    <slot>OnInitializeClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>526</x>
+     <x>446</x>
      <y>413</y>
     </hint>
     <hint type="destinationlabel">
-     <x>565</x>
-     <y>455</y>
+     <x>457</x>
+     <y>315</y>
     </hint>
    </hints>
   </connection>
@@ -521,8 +543,8 @@
      <y>75</y>
     </hint>
     <hint type="destinationlabel">
-     <x>201</x>
-     <y>281</y>
+     <x>279</x>
+     <y>72</y>
     </hint>
    </hints>
   </connection>
@@ -533,12 +555,12 @@
    <slot>OnSOLENOIDISetChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>100</x>
-     <y>105</y>
+     <x>118</x>
+     <y>103</y>
     </hint>
     <hint type="destinationlabel">
-     <x>304</x>
-     <y>150</y>
+     <x>287</x>
+     <y>108</y>
     </hint>
    </hints>
   </connection>
@@ -549,12 +571,12 @@
    <slot>OnDISCHARGEISetChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>100</x>
-     <y>245</y>
+     <x>140</x>
+     <y>248</y>
     </hint>
     <hint type="destinationlabel">
-     <x>12</x>
-     <y>247</y>
+     <x>317</x>
+     <y>246</y>
     </hint>
    </hints>
   </connection>
@@ -565,12 +587,12 @@
    <slot>OnDISCHARGEVSetChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>100</x>
-     <y>215</y>
+     <x>140</x>
+     <y>200</y>
     </hint>
     <hint type="destinationlabel">
-     <x>319</x>
-     <y>180</y>
+     <x>320</x>
+     <y>215</y>
     </hint>
    </hints>
   </connection>
@@ -585,8 +607,8 @@
      <y>385</y>
     </hint>
     <hint type="destinationlabel">
-     <x>188</x>
-     <y>436</y>
+     <x>182</x>
+     <y>440</y>
     </hint>
    </hints>
   </connection>
@@ -601,8 +623,8 @@
      <y>355</y>
     </hint>
     <hint type="destinationlabel">
-     <x>277</x>
-     <y>353</y>
+     <x>243</x>
+     <y>285</y>
     </hint>
    </hints>
   </connection>
@@ -613,12 +635,12 @@
    <slot>OnCloseButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>416</x>
+     <x>336</x>
      <y>413</y>
     </hint>
     <hint type="destinationlabel">
-     <x>429</x>
-     <y>455</y>
+     <x>343</x>
+     <y>444</y>
     </hint>
    </hints>
   </connection>
@@ -629,12 +651,12 @@
    <slot>OnCoolCathodeClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>354</x>
-     <y>266</y>
+     <x>373</x>
+     <y>360</y>
     </hint>
     <hint type="destinationlabel">
-     <x>354</x>
-     <y>368</y>
+     <x>395</x>
+     <y>274</y>
     </hint>
    </hints>
   </connection>
@@ -646,11 +668,27 @@
    <hints>
     <hint type="sourcelabel">
      <x>373</x>
-     <y>218</y>
+     <y>330</y>
     </hint>
     <hint type="destinationlabel">
-     <x>415</x>
-     <y>215</y>
+     <x>396</x>
+     <y>296</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>UpdateButton</sender>
+   <signal>clicked()</signal>
+   <receiver>PlasmaCtrlDlg</receiver>
+   <slot>OnUpdateClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>556</x>
+     <y>410</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>560</x>
+     <y>339</y>
     </hint>
    </hints>
   </connection>
@@ -667,5 +705,6 @@
   <slot>OnCloseButtonClicked()</slot>
   <slot>OnCoolCathodeClicked()</slot>
   <slot>OnHeatCathodeClicked()</slot>
+  <slot>OnUpdateClicked()</slot>
  </slots>
 </ui>

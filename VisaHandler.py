@@ -6,12 +6,13 @@ class VisaHandler(object):
 
     _resource_manager = visa.ResourceManager()
 
-    def __init__(self, address, RS485_enabled=True):
+    def __init__(self, address, RS485_enabled=True,error_query='SYST:ERR?'):
         self._address = address
         self._RS485_address = None
         self._RS485_enabled = RS485_enabled
         self._connection = None
         self._logger = logging.getLogger('VisaHandler')
+        self._error_query = error_query
         self.connect()
 
     def connect(self):
@@ -39,7 +40,7 @@ class VisaHandler(object):
             self._logger.debug('sending command \'{}\' to visa device (write)'.format(command))
             self._connection.write(command)
             time.sleep(0.115)
-            self.checkErrors()
+            #self.checkErrors()
             
             
     def query(self, command):
@@ -51,7 +52,7 @@ class VisaHandler(object):
             result = self._connection.query(command)
             time.sleep(0.115)
             self._logger.debug('recieved response \'{}\' from visa device'.format(result))
-            self.checkErrors()
+            #self.checkErrors()
             return result
         return None
 
@@ -62,27 +63,24 @@ class VisaHandler(object):
                 self._RS485_address = RS485_address
                 self.write('INST:SEL {:02}'.format(RS485_address))
                 self._RS485_address = RS485_address
-                self.checkErrors()
+                #self.checkErrors()
                 self._logger.info('Selected RS485 address {:02}'.format(RS485_address))
                 time.sleep(0.3)
+    def unlock(self):
+        logging.debug(self._connection.lock_state)
+        if not self._connection.lock_state == visa.constants.AccessModes.no_lock:
+            self._connection.unlock()
                 
     def checkErrors(self):
         if self._connection:
             if self._RS485_enabled:
                 assert self._RS485_address is not None
-
             try:
-                msg = self._connection.query('SYST:ERR?')
+                msg = self._connection.query(self._error_query)
                 time.sleep(0.050)
                 assert msg.split(',')[0] is '0'
             except AssertionError:
                 logging.warning(msg)
 
-            try:
-                msg = self._connection.query('ERR?')
-                time.sleep(0.050)
-                assert msg.split('   ')[1] is '0' or '8'
-            except AssertionError:
-                logging.warning(msg)
 
             
