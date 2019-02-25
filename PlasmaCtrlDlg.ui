@@ -460,6 +460,12 @@
    <property name="text">
     <string>Heat Cathode</string>
    </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="autoDefault">
+    <bool>false</bool>
+   </property>
   </widget>
   <widget class="QPushButton" name="CoolCathodeButton">
    <property name="geometry">
@@ -472,6 +478,12 @@
    </property>
    <property name="text">
     <string>Cool Cathode</string>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="autoDefault">
+    <bool>false</bool>
    </property>
   </widget>
   <widget class="QLabel" name="label_16">
@@ -645,38 +657,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>CoolCathodeButton</sender>
-   <signal>clicked()</signal>
-   <receiver>PlasmaCtrlDlg</receiver>
-   <slot>OnCoolCathodeClicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>373</x>
-     <y>360</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>395</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>HeatCathodeButton</sender>
-   <signal>clicked()</signal>
-   <receiver>PlasmaCtrlDlg</receiver>
-   <slot>OnHeatCathodeClicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>373</x>
-     <y>330</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>396</x>
-     <y>296</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>UpdateButton</sender>
    <signal>clicked()</signal>
    <receiver>PlasmaCtrlDlg</receiver>
@@ -692,6 +672,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>HeatCathodeButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>PlasmaCtrlDlg</receiver>
+   <slot>HeatCathodeToggle()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>348</x>
+     <y>330</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>301</x>
+     <y>225</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>OnInitializeClicked()</slot>
@@ -703,8 +699,8 @@
   <slot>OnHEATERISetChanged()</slot>
   <slot>OnTimer()</slot>
   <slot>OnCloseButtonClicked()</slot>
-  <slot>OnCoolCathodeClicked()</slot>
-  <slot>OnHeatCathodeClicked()</slot>
   <slot>OnUpdateClicked()</slot>
+  <slot>HeatCathodeToggle()</slot>
+  <slot>CoolCathodeToggle()</slot>
  </slots>
 </ui>
